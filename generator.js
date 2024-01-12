@@ -40,7 +40,7 @@ class Generator {
 
   createParticle() {
     const x = this.startingX;
-    const y = this.getRandom(10);
+    const y = this.getRandom(this.drawer.getCanvasHeight() / 5);
     console.log('new particle at ', x, y);
     return new Particle(x, y);
   }
@@ -83,7 +83,9 @@ class Generator {
 
     if (this.config.shouldAnimate()) {
       this.drawer.clearCanvas();
-      this.drawer.drawRestrictedArea();
+      this.drawer.drawRestrictedArea(
+        (2 * Math.PI) / this.config.getTentacles()
+      );
 
       this.drawer.drawParticle(this.currentParticle);
       this.tentacle.forEach((particle) => this.drawer.drawParticle(particle));

@@ -8,6 +8,7 @@ class Drawer {
     this.defaultFill = defaultFill;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.canvas.width / 2, this.canvas.height / 2);
+    this.ctx.scale(1, -1);
   }
 
   clearCanvas() {
@@ -42,13 +43,18 @@ class Drawer {
     return this.canvas.height;
   }
 
-  drawRestrictedArea() {
-    this.ctx.fillStyle = 'red';
+  drawRestrictedArea(angle) {
+    this.ctx.strokeStyle = 'red';
 
     this.ctx.beginPath();
     this.ctx.moveTo(0, 0);
-    this.ctx.lineTo(0, this.canvas.width);
-    // todo
+    this.ctx.lineTo(this.canvas.width, 0);
+    this.ctx.moveTo(0, 0);
+    this.ctx.lineTo(
+      this.canvas.width,
+      Math.abs(Math.tan(angle) * this.canvas.width)
+    );
+    this.ctx.stroke();
     this.ctx.closePath();
   }
 }
