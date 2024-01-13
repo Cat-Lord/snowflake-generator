@@ -12,10 +12,7 @@ class Generator {
 
   generate() {
     this.currentParticle = this.createParticle();
-    this.generationId = setInterval(
-      () => this.update(), // TODO: verify if this works
-      this.config.getUpdateInterval()
-    );
+    requestAnimationFrame(() => this.update());
   }
 
   triggerGeneration(shouldStop = false) {
@@ -30,8 +27,6 @@ class Generator {
     }
 
     this.isRunning = !this.isRunning;
-    console.log('should stop?', this.isRunning);
-
     if (this.isRunning === false) {
       clearInterval(this.generationId);
       this.generationId = null;
@@ -41,7 +36,6 @@ class Generator {
   createParticle() {
     const x = this.startingX;
     const y = this.getRandom(this.drawer.getCanvasHeight() / 5);
-    console.log('new particle at ', x, y);
     return new Particle(x, y);
   }
 
@@ -72,23 +66,22 @@ class Generator {
   }
 
   update() {
-    console.log('update');
-    if (this.canUpdateCurrentParticle()) {
+    // keep generating new particles
+    while (this.canUpdateCurrentParticle()) {
       this.currentParticle.update();
       this.currentParticle.restrictWithinAngle(this.tentacleAngleRestriction);
-    } else {
-      this.tentacle.push(this.currentParticle);
-      this.currentParticle = this.createParticle();
     }
 
-    if (this.config.shouldAnimate()) {
-      this.drawer.clearCanvas();
-      this.drawer.drawRestrictedArea(
-        (2 * Math.PI) / this.config.getTentacles()
-      );
+    this.tentacle.push(this.currentParticle);
+    this.drawer.render(this.tentacle);
+    this.currentParticle = this.createParticle();
 
-      this.drawer.drawParticle(this.currentParticle);
-      this.tentacle.forEach((particle) => this.drawer.drawParticle(particle));
+    // new particle cannot be updated, generation is finished
+    if (this.canUpdateCurrentParticle() === false) {
+      this.triggerGeneration(true);
+      console.log('Generation ended');
+    } else {
+      requestAnimationFrame(() => this.update());
     }
   }
 
