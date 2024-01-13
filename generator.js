@@ -1,7 +1,6 @@
 class Generator {
   constructor(config, drawer) {
     this.isRunning = true;
-    this.tentacleAngleRestriction = (2 * Math.PI) / config.getTentacles();
     this.config = config;
     this.drawer = drawer;
 
@@ -69,7 +68,9 @@ class Generator {
     // keep generating new particles
     while (this.canUpdateCurrentParticle()) {
       this.currentParticle.update();
-      this.currentParticle.restrictWithinAngle(this.tentacleAngleRestriction);
+      this.currentParticle.restrictWithinAngle(
+        this.config.getTentacleRestrictionAngle()
+      );
     }
 
     this.tentacle.push(this.currentParticle);

@@ -31,6 +31,7 @@ class Drawer {
 
   render(allParticles) {
     this.clearCanvas();
+    // this.showRestrictionGrid();
     this.drawParticle(new Particle(0, 0, 5, 'red'));
 
     for (let i = 0; i < this.config.getTentacles(); i++) {
@@ -64,5 +65,20 @@ class Drawer {
 
   getCanvasHeight() {
     return this.canvas.height;
+  }
+
+  showRestrictionGrid() {
+    this.ctx.strokeStyle = 'red';
+    this.ctx.beginPath();
+    this.ctx.moveTo(0, 0);
+    this.ctx.lineTo(this.canvas.width, 0);
+    this.ctx.moveTo(0, 0);
+    this.ctx.lineTo(
+      this.canvas.width,
+      this.canvas.width * Math.tan(this.config.getTentacleRestrictionAngle())
+    );
+    this.ctx.stroke();
+    this.ctx.closePath();
+    this.ctx.strokeStyle = 'white';
   }
 }
