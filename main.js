@@ -20,5 +20,5 @@ function init() {
     }
   });
 
-  generator.generate();
+  // generator.generate();
 }

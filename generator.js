@@ -1,6 +1,6 @@
 class Generator {
   constructor(config, drawer) {
-    this.isRunning = true;
+    this.isRunning = false;
     this.config = config;
     this.drawer = drawer;
 
@@ -11,7 +11,7 @@ class Generator {
 
   generate() {
     this.currentParticle = this.createParticle();
-    requestAnimationFrame(() => this.update());
+    this.generationId = requestAnimationFrame(() => this.update());
   }
 
   triggerGeneration(shouldStop = false) {
@@ -25,10 +25,13 @@ class Generator {
       }
     }
 
+    // todo: this needs to be either removed or fixed. Currently only pausing is possible
     this.isRunning = !this.isRunning;
     if (this.isRunning === false) {
-      clearInterval(this.generationId);
+      cancelAnimationFrame(this.generationId);
       this.generationId = null;
+    } else if (this.generationId === null) {
+      this.generate();
     }
   }
 
@@ -82,7 +85,7 @@ class Generator {
       this.triggerGeneration(true);
       console.log('Generation ended');
     } else {
-      requestAnimationFrame(() => this.update());
+      this.generationId = requestAnimationFrame(() => this.update());
     }
   }
 
