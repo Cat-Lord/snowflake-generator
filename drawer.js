@@ -15,12 +15,15 @@ class Drawer {
   }
 
   clearCanvas() {
+    this.ctx.save();
+    this.ctx.scale(1.2, 1.2);
     this.ctx.clearRect(
       -this.canvas.width / 2,
       -this.canvas.height / 2,
       this.canvas.width,
       this.canvas.height
     );
+    this.ctx.restore();
   }
 
   drawAllParticles(allParticles) {

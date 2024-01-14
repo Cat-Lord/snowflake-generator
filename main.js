@@ -11,7 +11,7 @@ function init() {
         break;
       }
       case 'Escape': {
-        generator.triggerGeneration(shouldEscape);
+        generator.resetGeneration();
         break;
       }
       default: {
@@ -19,6 +19,4 @@ function init() {
       }
     }
   });
-
-  // generator.generate();
 }

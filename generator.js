@@ -7,6 +7,7 @@ class Generator {
     this.startingX = drawer.getCanvasWidth() / 2;
     this.tentacle = [];
     this.generationId = null;
+    this.finished = false;
   }
 
   generate() {
@@ -14,25 +15,26 @@ class Generator {
     this.generationId = requestAnimationFrame(() => this.update());
   }
 
-  triggerGeneration(shouldStop = false) {
-    if (shouldStop) {
-      if (this.isRunning) {
-        this.currentParticle = null;
-        this.tentacle = [];
-      } else {
-        // 'shouldStop' action should start the generation
-        return;
+  triggerGeneration() {
+    if (this.generationId === null) {
+      if (this.finished === false) {
+        this.generationId = requestAnimationFrame(() => this.generate());
       }
-    }
-
-    // todo: this needs to be either removed or fixed. Currently only pausing is possible
-    this.isRunning = !this.isRunning;
-    if (this.isRunning === false) {
+    } else {
       cancelAnimationFrame(this.generationId);
       this.generationId = null;
-    } else if (this.generationId === null) {
-      this.generate();
     }
+  }
+
+  resetGeneration() {
+    if (this.generationId !== null) {
+      this.triggerGeneration();
+    }
+
+    this.tentacle = [];
+    this.currentParticle = null;
+    this.drawer.clearCanvas();
+    this.finished = false;
   }
 
   createParticle() {
@@ -83,7 +85,7 @@ class Generator {
     // new particle cannot be updated, generation is finished
     if (this.canUpdateCurrentParticle() === false) {
       this.triggerGeneration(true);
-      console.log('Generation ended');
+      this.finished = true;
     } else {
       this.generationId = requestAnimationFrame(() => this.update());
     }
