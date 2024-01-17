@@ -1,5 +1,5 @@
 class Particle {
-  constructor(x, y, radius = 3, color = 'white') {
+  constructor(x, y, radius, color = 'white') {
     this.x = x;
     this.y = y;
     this.radius = radius;

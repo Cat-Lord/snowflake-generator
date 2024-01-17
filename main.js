@@ -1,3 +1,8 @@
+function configChangeListener(element, defaultValue, callback) {
+  element.value = defaultValue;
+  element.addEventListener('change', callback);
+}
+
 function init() {
   const config = new Config();
   const drawer = new Drawer(document.getElementById('canvas'), config);
@@ -20,16 +25,20 @@ function init() {
   });
 
   const branchCountElement = document.getElementById('branch-count');
-  branchCountElement.value = config.tentacles;
-  branchCountElement.addEventListener('change', (ev) => {
+  configChangeListener(branchCountElement, config.tentacles, (ev) => {
     const branchCount = parseInt(ev.target.value);
     config.setTentacles(branchCount);
   });
 
   const spreadElement = document.getElementById('spread');
-  spreadElement.value = config.spread;
-  spreadElement.addEventListener('change', (ev) => {
+  configChangeListener(spreadElement, config.spread, (ev) => {
     const spread = parseFloat(ev.target.value);
     config.setSpread(spread);
+  });
+
+  const radiusElement = document.getElementById('radius');
+  configChangeListener(radiusElement, config.radius, (ev) => {
+    const radius = parseFloat(ev.target.value);
+    config.setRadius(radius);
   });
 }

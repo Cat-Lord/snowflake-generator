@@ -3,6 +3,7 @@ class Generator {
     this.isRunning = false;
     this.config = config;
     this.drawer = drawer;
+    this.initialColor = new Color(0, 0, 255);
 
     this.startingX = drawer.getCanvasWidth() / 2;
     this.tentacle = [];
@@ -11,6 +12,7 @@ class Generator {
   }
 
   generate() {
+    this.config.setColor(this.initialColor);
     this.currentParticle = this.createParticle();
     this.generationId = requestAnimationFrame(() => this.update());
   }
@@ -42,7 +44,10 @@ class Generator {
   createParticle() {
     const x = this.startingX;
     const y = this.getRandom(15);
-    return new Particle(x, y);
+    const radius = this.config.getRadius();
+    const color = this.config.getColor();
+    const particleColor = `rgb(${color.getR()}, ${color.getG()}, ${color.getB()})`;
+    return new Particle(x, y, radius, particleColor);
   }
 
   dist(particleA, particleB) {
@@ -71,6 +76,12 @@ class Generator {
     return true;
   }
 
+  // TODO: play around with this
+  updateColor() {
+    const color = this.config.getColor();
+    color.setB((Math.sin(color.getB()) + 1) * 255);
+  }
+
   update() {
     // keep generating new particles
     while (this.canUpdateCurrentParticle()) {
@@ -80,6 +91,7 @@ class Generator {
       );
     }
 
+    this.updateColor();
     this.tentacle.push(this.currentParticle);
     this.drawer.render(this.tentacle);
     this.currentParticle = this.createParticle();
