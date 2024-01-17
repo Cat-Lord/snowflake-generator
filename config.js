@@ -1,5 +1,5 @@
 class Config {
-  constructor(tentacles = 7, spread = 3) {
+  constructor(tentacles = 5, spread = 3) {
     this.tentacles = tentacles;
     this.spread = spread;
     this.tentacleRestrictionAngle = Math.PI / this.tentacles;

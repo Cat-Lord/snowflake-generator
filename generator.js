@@ -41,7 +41,7 @@ class Generator {
 
   createParticle() {
     const x = this.startingX;
-    const y = this.getRandom(this.drawer.getCanvasHeight() / 5);
+    const y = this.getRandom(15);
     return new Particle(x, y);
   }
 
@@ -86,7 +86,7 @@ class Generator {
 
     // new particle cannot be updated, generation is finished
     if (this.canUpdateCurrentParticle() === false) {
-      this.triggerGeneration(true);
+      this.triggerGeneration();
       this.finished = true;
     } else {
       this.generationId = requestAnimationFrame(() => this.update());
