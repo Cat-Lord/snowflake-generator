@@ -1,20 +1,25 @@
 class Config {
-  // TODO: default animate to false
-  constructor(tentacles = 5, animate = true) {
+  constructor(tentacles = 7, spread = 3) {
     this.tentacles = tentacles;
-    this.animate = animate;
+    this.spread = spread;
     this.tentacleRestrictionAngle = Math.PI / this.tentacles;
   }
 
+  setTentacles(tentacles) {
+    this.tentacles = tentacles;
+  }
   getTentacles() {
     return this.tentacles;
   }
 
-  getTentacleRestrictionAngle() {
-    return this.tentacleRestrictionAngle;
+  setSpread(spread) {
+    this.spread = spread;
+  }
+  getSpread() {
+    return this.spread;
   }
 
-  shouldAnimate() {
-    return this.animate;
+  getTentacleRestrictionAngle() {
+    return this.tentacleRestrictionAngle;
   }
 }

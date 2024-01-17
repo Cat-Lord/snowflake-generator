@@ -72,7 +72,7 @@ class Generator {
   update() {
     // keep generating new particles
     while (this.canUpdateCurrentParticle()) {
-      this.currentParticle.update();
+      this.currentParticle.update(this.config.spread);
       this.currentParticle.restrictWithinAngle(
         this.config.getTentacleRestrictionAngle()
       );

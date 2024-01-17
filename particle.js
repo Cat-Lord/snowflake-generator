@@ -6,9 +6,9 @@ class Particle {
     this.color = color;
   }
 
-  update = () => {
+  update = (spread) => {
     this.x -= 1;
-    this.y += -2 + Math.random() * 4;
+    this.y += -spread + Math.random() * (spread * 2);
   };
 
   // expects radians

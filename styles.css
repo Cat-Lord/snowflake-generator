@@ -1,9 +1,22 @@
 body {
   background-color: black;
+  color: white;
 }
 
 canvas {
-  margin-top: 20px;
-  margin-left: 500px;
   border: 1px solid white;
+}
+
+#canvas-with-config {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin: 25px;
+}
+
+#config {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
 }

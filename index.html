@@ -7,7 +7,23 @@
     <link rel="stylesheet" type="text/css" href="styles.css" />
   </head>
   <body onload="init()">
-    <canvas id="canvas" width="600" height="600"></canvas>
+    <div id="canvas-with-config">
+      <canvas id="canvas" width="600" height="600"></canvas>
+      <div id="config">
+        <div>
+          <p>Number of branches:</p>
+          <input id="branch-count" type="number" min="3" max="15" />
+        </div>
+
+        <div>
+          <p>Spread:</p>
+          <input id="spread" type="number" min="1.0" max="5.0" step="0.5" />
+        </div>
+
+        <!-- Todo -->
+        <button>Save as PNG</button>
+      </div>
+    </div>
 
     <script src="particle.js"></script>
     <script src="config.js"></script>
