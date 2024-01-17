@@ -16,10 +16,12 @@ class Generator {
   }
 
   triggerGeneration() {
+    if (this.finished) {
+      this.resetGeneration();
+    }
+
     if (this.generationId === null) {
-      if (this.finished === false) {
-        this.generationId = requestAnimationFrame(() => this.generate());
-      }
+      this.generationId = requestAnimationFrame(() => this.generate());
     } else {
       cancelAnimationFrame(this.generationId);
       this.generationId = null;
